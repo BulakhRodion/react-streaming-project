@@ -25,9 +25,9 @@ export default function Featured({type}) {
                     </select>
                 </div>
             )}
-            <img src="" alt=""/>
+            <img src="http://cdn30.us1.fansshare.com/image/thebiglebowski/the-big-lebowski-the-big-lebowski-poster-243578356.jpg" alt=""/>
             <div className="featured_info">
-                <img src="" alt=""/>
+                <img src="https://picfiles.alphacoders.com/130/130936.png" alt=""/>
                 <span className="featured_info-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
                 <div className="featured_buttons">
                     <button className="featured_buttons-play">
