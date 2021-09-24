@@ -4,7 +4,7 @@ import Registration from "./pages/registration/Registration";
 import Loginization from "./pages/loginization/Loginization";
 
 const App = () => {
-  return <Homepage />
+  return <Registration />
 };
 
 export default App;
