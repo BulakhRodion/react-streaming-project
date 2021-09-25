@@ -1,10 +1,8 @@
 .jumbotron {
   background-color: black;
   color: white;
-  @media (max-width: 1000px) {
-  &:last-child {
-    margin-bottom: 50px;
-    }
+  &:first-child > .jumbotron_container {
+    border-top: 8px solid #222;
   }
 
   &_inner {
@@ -15,10 +13,9 @@
     margin: auto;
     width: 100%;
     @media (max-width: 1000px) {
-      flex-direction: column;
+      flex-direction: column!important;
     }
   }
-
 
  &_text-wrapper, &_media {
    width: 50%;
@@ -46,7 +43,6 @@
     left: 17%;
     top: 11%;
   }
-
 
   &_title {
     font-size: 50px;

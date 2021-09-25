@@ -1,6 +1,7 @@
 import "./registration.scss"
 import {useRef, useState} from "react";
 import Jumbotron from "../../components/jumbotron/Jumbotron";
+import Accordion from "../../components/accordion/Accordion";
 
 export default function Registration() {
 
@@ -47,6 +48,7 @@ export default function Registration() {
             <Jumbotron direction={"row-reverse"} index={1}/>
             <Jumbotron direction={"row"} index={2} videoS={true}/>
             <Jumbotron direction={"row-reverse"} index={3}/>
+            <Accordion />
         </div>
     )
 }
