@@ -2,7 +2,8 @@ import "./suggestionsitem.scss"
 import {Add, PlayArrow, ThumbDownOutlined, ThumbUpAltOutlined} from "@material-ui/icons";
 import {useState} from "react";
 
-export default function SuggestionsItem({index}) {
+
+export default function SuggestionsItem({index, item, fetchres}) {
 
     const [isHovered, setIsHovered] = useState(false);
     const trailer = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
@@ -13,7 +14,7 @@ export default function SuggestionsItem({index}) {
              onMouseEnter={() => setIsHovered(true)}
              onMouseLeave={() => setIsHovered(false)}>
             <img
-                src="https://cdn.vox-cdn.com/thumbor/VyBqF-AOSe2epytkcyy6VrjT70g=/0x0:2000x1270/1200x800/filters:focal(840x475:1160x795)/cdn.vox-cdn.com/uploads/chorus_image/image/69829481/Rick_And_Morty_Season_5_Episode_10_copy.0.jpg"
+                src={fetchres && item.show.image ? item.show.image.medium : ""}
                 alt="poster"/>
             {isHovered && (
                 <>
@@ -31,8 +32,7 @@ export default function SuggestionsItem({index}) {
                             <span>1999</span>
                         </div>
                         <div className="item-info_description">
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
+                            {item.show.summary}
                         </div>
                         <div className="item-info_genre">Action</div>
                     </div>

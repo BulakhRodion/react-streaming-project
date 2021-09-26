@@ -3,11 +3,11 @@ import Navbar from "../../components/navbar/Navbar";
 import Featured from "../../components/featured/Featured";
 import Suggestions from "../../components/suggestions/Suggestions";
 
-const Homepage = () => {
+const Homepage = ({type}) => {
     return (
         <div className="homepage">
             <Navbar />
-            <Featured />
+            <Featured type={type}/>
             <Suggestions />
             <Suggestions />
             <Suggestions />
