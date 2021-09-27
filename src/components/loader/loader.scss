@@ -1,0 +1,31 @@
+.loader {
+  display: flex;
+  margin-right: 5px;
+  overflow: hidden;
+  .skeleton-card {
+    width: 225px;
+    height: 120px;
+    background-color: rgba(23, 21, 21, 0.76);
+    overflow: hidden;
+    margin-right: 10px;
+    position: relative;
+    &:after {
+      content: "";
+      display: block;
+      height: 240px;
+      width: 30px;
+      background-color: rgba(255, 255, 255, 0.48);
+      transform: rotate(-140deg);
+      position: absolute;
+      top: -64px;
+      left: -82px;
+      animation: load 2s ease-in 1s infinite alternate;
+    }
+    @keyframes load {
+      0% { left: -82px; }
+      100% { left: 290px; }
+    }
+  }
+
+
+}

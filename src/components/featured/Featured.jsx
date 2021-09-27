@@ -1,7 +1,20 @@
 import "./featured.scss"
 import {InfoOutlined, PlayArrow} from "@material-ui/icons";
+import { searchSingle } from '../../requests/requests';
+import {useEffect, useState} from "react";
+import poster from '../../assets/images/no-poster.png';
 
 export default function Featured({type}) {
+
+    const [single, setSingle] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(async () => {
+        const res = await searchSingle();
+        setSingle(res)
+        setIsLoading(true);
+    }, [])
+
     return (
         <div className="featured">
             {type && (
@@ -25,10 +38,12 @@ export default function Featured({type}) {
                     </select>
                 </div>
             )}
-            <img src="http://cdn30.us1.fansshare.com/image/thebiglebowski/the-big-lebowski-the-big-lebowski-poster-243578356.jpg" alt=""/>
+            <div className="featured_img-wrapper">
+                <img src={isLoading ? single.image?.original : poster } alt="Show poster"/>
+            </div>
             <div className="featured_info">
-                <img src="https://picfiles.alphacoders.com/130/130936.png" alt=""/>
-                <span className="featured_info-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+                <h1>{isLoading ? single.name : "No title"}</h1>
+                <span className="featured_info-description">{isLoading ? single.summary : "No description availiable"}</span>
                 <div className="featured_buttons">
                     <button className="featured_buttons-play">
                         <PlayArrow/>
