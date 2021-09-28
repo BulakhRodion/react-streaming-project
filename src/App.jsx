@@ -3,30 +3,31 @@ import Homepage from './pages/homepage/Homepage';
 import Registration from "./pages/registration/Registration";
 import Loginization from "./pages/loginization/Loginization";
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route
+    BrowserRouter as Router, Switch
 } from "react-router-dom";
+import {IsUserRedirect, ProtectedRoute} from "./helpers/routes"
 
 const App = () => {
+    const user = null;
+
     return (
         <Router>
             <Switch>
-                <Route exact path="/">
-                    <Homepage/>
-                </Route>
+                <IsUserRedirect user={user} exact loggedInPath="/browse" path="/">
+                    <Registration/>
+                </IsUserRedirect>
                 {/*<Route path="/movies">*/}
                 {/*    <Homepage/>*/}
                 {/*</Route>*/}
                 {/*<Route path="/series">*/}
                 {/*    <Homepage/>*/}
                 {/*</Route>*/}
-                <Route path="/register">
-                    <Registration/>
-                </Route>
-                <Route path="/login">
+                <ProtectedRoute user={user} exact path="/browse">
+                    <Homepage/>
+                </ProtectedRoute>
+                <IsUserRedirect user={user} exact loggedInPath="/browse" path="/login">
                     <Loginization/>
-                </Route>
+                </IsUserRedirect>
             </Switch>
         </Router>
     );

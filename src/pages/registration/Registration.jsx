@@ -1,21 +1,36 @@
 import "./registration.scss"
-import {useRef, useState} from "react";
+import { useState} from "react";
 import Jumbotron from "../../components/jumbotron/Jumbotron";
 import Accordion from "../../components/accordion/Accordion";
+import {Link, useHistory} from "react-router-dom";
+import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 
 export default function Registration() {
 
-    const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
+    const history = useHistory();
+    const auth = getAuth();
 
-    const emailRef = useRef();
-    const passRef = useRef();
+    const [emailAddress, setEmailAddress] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const isInvalid = emailAddress === '' || password === '';
 
-    const handleStart = () => {
-        setEmail(emailRef.current.value);
-    }
-    const handleFinish = () => {
-        setPass(passRef.current.value);
+
+    const handleFinish = event => {
+        event.preventDefault()
+
+        createUserWithEmailAndPassword(auth, emailAddress, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+            })
+            .then(() => {
+                history.push('/login')
+            })
+            .catch((error) => {
+                setEmailAddress('');
+                setPassword('');
+                setError(error.message);
+            });
     }
     return (
         <div className="registration">
@@ -25,30 +40,36 @@ export default function Registration() {
                         <img className="registration_head-logo"
                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png"
                              alt="Netflix logo"/>
-                        <button className="registration_head-login">Sign in</button>
+                        <Link to={{pathname: "/login"}}>
+                            <button className="registration_head-login">Sign in</button>
+                        </Link>
                     </div>
                 </div>
                 <div className="registration_main">
                     <h1>Unlimited movies, TV shows, and more.</h1>
                     <h2>Watch anywhere. Cancel anytime.</h2>
-                    <p>Ready to watch? Enter your email to create or restart your membership.</p>{
-                    !email ? (
+                    <p>Ready to watch? Enter your email to create or restart your membership.</p>
+                    {error && <div className='registration_error'>{error}</div>}
+                    <form className="registration_main-form" onSubmit={handleFinish} method="POST">
                         <div className="registration_main-input">
-                            <input type="email" placeholder="email address" ref={emailRef}/>
-                            <button className="registration_main-button" onClick={handleStart}>Get Started</button>
+                            <input type="email" placeholder="email address" value={emailAddress}
+                                   onChange={({target}) => setEmailAddress(target.value)}/>
+                            <input type="password" placeholder="password" value={password}
+                                   onChange={({target}) => setPassword(target.value)}/>
                         </div>
-                    ) : (<form className="registration_main-input">
-                        <input type="password" placeholder="password" ref={passRef}/>
-                        <button className="registration_main-button" onClick={handleFinish}>Start Membership</button>
-                    </form>)
-                }
+                        <div className="registration_main-input">
+                            <button className="registration_main-button" type="submit" >Start
+                                Membership
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <Jumbotron direction={"row"} index={0} videoF={true}/>
             <Jumbotron direction={"row-reverse"} index={1}/>
             <Jumbotron direction={"row"} index={2} videoS={true}/>
             <Jumbotron direction={"row-reverse"} index={3}/>
-            <Accordion />
+            <Accordion/>
         </div>
     )
 }
