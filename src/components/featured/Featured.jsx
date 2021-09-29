@@ -4,15 +4,19 @@ import { searchSingle } from '../../requests/requests';
 import {useEffect, useState} from "react";
 import poster from '../../assets/images/no-poster.png';
 
-export default function Featured({type}) {
+export default function Featured() {
+    const type = "movie";
 
     const [single, setSingle] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(async () => {
-        const res = await searchSingle();
-        setSingle(res)
-        setIsLoading(true);
+    useEffect( () => {
+        async function fetchData() {
+            const res = await searchSingle();
+            setSingle(res)
+            setIsLoading(true);
+        }
+        fetchData()
     }, [])
 
     return (

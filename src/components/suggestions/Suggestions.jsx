@@ -17,22 +17,26 @@ export default function Suggestions({query}) {
 
     const handleClick = (direction) => {
         setIsMoved(true);
+        const clickLimit = window.innerWidth / 230;
         let distance = listRef.current.getBoundingClientRect().x - 50;
         if (direction === "left" && slideNumber > 0) {
             setSlideNumber(slideNumber - 1);
             listRef.current.style.transform = `translateX(${230 + distance}px)`;
         }
-        if (direction === "right" && slideNumber < 4) {
+        if (direction === "right" && slideNumber < 10 - clickLimit) {
             setSlideNumber(slideNumber + 1);
             listRef.current.style.transform = `translateX(${-230 + distance}px)`;
         }
     }
 
-    useEffect(async () => {
-        const res = await searchShows(query);
-        setShows(res)
-        setIsLoading(false);
-    }, [])
+    useEffect( () => {
+        async function fetchData() {
+            const res = await searchShows(query);
+            setShows(res)
+            setIsLoading(false);
+        }
+        fetchData()
+    })
 
     return (
         <div className="suggestions">
@@ -46,12 +50,14 @@ export default function Suggestions({query}) {
                 <div className="suggestions_container" ref={listRef}>
                     {isLoading ? (<Loader />) : (
                         shows.map((item, index) => (
-                            <SuggestionsItem index={index} image={item.show.image} descr={item.show.summary}
+                            <SuggestionsItem   index={index} image={item.show.image} descr={item.show.summary}
                                              genres={item.show.genres} premier={item.show.premiered}
                                              lang={item.show.language} key={item.show.id}/>))
                     )}
                 </div>
-                <ArrowForwardIosOutlined className="slider-arrow forward" onClick={() => handleClick("right")}/>
+                <ArrowForwardIosOutlined
+                    className="slider-arrow forward"
+                    onClick={() => handleClick("right")}/>
             </div>
         </div>
     )

@@ -1,3 +1,5 @@
+@import "../../app";
+
 .suggestions {
   width: 100%;
   margin-top: 10px;
@@ -16,6 +18,10 @@
     width: max-content;
     transform: translateX(0px);
     transition: all 1s ease;
+
+    @include mobile {
+      margin-left: 20px;
+    }
   }
 
   &_wrapper {
@@ -32,6 +38,7 @@
       bottom: 0;
       margin: auto;
       z-index: 99;
+
 
       &.backward {
         left: 0;

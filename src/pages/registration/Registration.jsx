@@ -1,7 +1,8 @@
 import "./registration.scss"
-import { useState} from "react";
+import {useState} from "react";
 import Jumbotron from "../../components/jumbotron/Jumbotron";
 import Accordion from "../../components/accordion/Accordion";
+import {AccordionData} from "../../helpers/AccordionData";
 import {Link, useHistory} from "react-router-dom";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 
@@ -13,24 +14,31 @@ export default function Registration() {
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const isInvalid = emailAddress === '' || password === '';
+    const [showError, setShowError] = useState(false);
+    const isEmailInvalid = emailAddress.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+    const isPasswordInvalid = password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/);
 
 
     const handleFinish = event => {
         event.preventDefault()
 
-        createUserWithEmailAndPassword(auth, emailAddress, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-            })
-            .then(() => {
-                history.push('/login')
-            })
-            .catch((error) => {
-                setEmailAddress('');
-                setPassword('');
-                setError(error.message);
-            });
+        if (isEmailInvalid && isPasswordInvalid) {
+            createUserWithEmailAndPassword(auth, emailAddress, password)
+                .then(() => {
+                    history.push('/login')
+                })
+                .catch((error) => {
+                    setEmailAddress('');
+                    setPassword('');
+                    if (error.message === 'Firebase: Error (auth/invalid-email).') {
+                        setError('Email is invalid')
+                    } else {
+                        setError(error.message)
+                    }
+                });
+        } else {
+            setShowError(true);
+        }
     }
     return (
         <div className="registration">
@@ -49,8 +57,9 @@ export default function Registration() {
                     <h1>Unlimited movies, TV shows, and more.</h1>
                     <h2>Watch anywhere. Cancel anytime.</h2>
                     <p>Ready to watch? Enter your email to create or restart your membership.</p>
-                    {error && <div className='registration_error'>{error}</div>}
                     <form className="registration_main-form" onSubmit={handleFinish} method="POST">
+                        {error && <div className='registration_error'>{error}</div>}
+                        {showError && <div className='registration_error'>Email or password is incorrect. Password should be 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter</div>}
                         <div className="registration_main-input">
                             <input type="email" placeholder="email address" value={emailAddress}
                                    onChange={({target}) => setEmailAddress(target.value)}/>
@@ -58,7 +67,7 @@ export default function Registration() {
                                    onChange={({target}) => setPassword(target.value)}/>
                         </div>
                         <div className="registration_main-input">
-                            <button className="registration_main-button" type="submit" >Start
+                            <button className="registration_main-button" type="submit">Start
                                 Membership
                             </button>
                         </div>
@@ -69,7 +78,12 @@ export default function Registration() {
             <Jumbotron direction={"row-reverse"} index={1}/>
             <Jumbotron direction={"row"} index={2} videoS={true}/>
             <Jumbotron direction={"row-reverse"} index={3}/>
-            <Accordion/>
+            <div className="registration_faq-container">
+                <h2 className="registration_faq-title">Frequently Asked Questions</h2>
+                {AccordionData.map(item =>{
+                    return (<Accordion key={item.id} data={item}/>)
+                })}
+            </div>
         </div>
     )
 }

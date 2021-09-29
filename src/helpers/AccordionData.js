@@ -1,4 +1,4 @@
-export const Data = [
+export const AccordionData = [
     {
         id: 123,
         question: "What is Netflix",

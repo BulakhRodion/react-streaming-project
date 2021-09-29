@@ -18,4 +18,6 @@ export const searchSingle = async () => {
     return data;
 }
 
-export default [searchShows, searchSingle];
+const exportArr = [searchShows, searchSingle];
+
+export default exportArr;

@@ -23,7 +23,11 @@ export default function Loginization() {
         }).catch((error) => {
             setEmailAddress('');
             setPassword('');
-            setError(error.message)
+            if (error.message === 'Firebase: Error (auth/user-not-found).') {
+                setError('User not found :C')
+            } else {
+                setError(error.message)
+            }
         });
     }
 
