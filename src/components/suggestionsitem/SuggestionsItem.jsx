@@ -1,12 +1,41 @@
 import "./suggestionsitem.scss"
-import {Add, PlayArrow, ThumbDownOutlined, ThumbUpAltOutlined} from "@material-ui/icons";
-import {useState} from "react";
+import {Add, PlayArrow, Remove, ThumbDownOutlined, ThumbUpAltOutlined} from "@material-ui/icons";
+import {useEffect, useState} from "react";
 import poster from '../../assets/images/no-poster.png';
 
-export default function SuggestionsItem({index, image, descr, genres, premier, lang}) {
+export default function SuggestionsItem({index, item}) {
 
+    const user = useState(JSON.parse(localStorage.getItem('authUser')));
     const [isHovered, setIsHovered] = useState(false);
-    const premDay = new Date(premier);
+    const [favourites, setFavourites] = useState([]);
+    const [isAdded, setIsAdded] = useState(false);
+
+    const saveToLocalStorage = (items) => {
+        localStorage.setItem(`${user[0].uid}`, JSON.stringify(items))
+    }
+
+    const handleAdd = () => {
+        const favsArray = JSON.parse(localStorage.getItem(`${user[0].uid}`)) || [];
+        const newFavouriteList = [...favsArray, item];
+        if (favourites.includes(item)) {
+            return null;
+        } else {
+            setFavourites(newFavouriteList);
+            saveToLocalStorage(newFavouriteList);
+        }
+    }
+    const handleRemove = () => {
+        const newFavouriteList = favourites.filter((fav) => fav.show.id !== item.show.id);
+        setFavourites(newFavouriteList)
+    }
+
+    useEffect( () => {
+        const favsArray = JSON.parse(localStorage.getItem(`${user[0].uid}`)) || [];
+        if(favsArray.includes(item)) {
+            setIsAdded(true)
+        }
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>
@@ -16,27 +45,28 @@ export default function SuggestionsItem({index, image, descr, genres, premier, l
                      onMouseEnter={() => setIsHovered(true)}
                      onMouseLeave={() => setIsHovered(false)}>
                     <img
-                        src={image ? image.medium : poster}
+                        src={item.show.image ? item.show.image.medium : poster}
                         alt="poster"/>
                     {isHovered && (
                         <>
                             <div className="suggestions-item_info">
                                 <div className="icons">
                                     <PlayArrow className="icon"/>
-                                    <Add className="icon"/>
+                                    {isAdded ? <Remove className="icon" onClick={handleRemove}/> : <Add className="icon" onClick={handleAdd}/>}
                                     <ThumbUpAltOutlined className="icon"/>
                                     <ThumbDownOutlined className="icon"/>
                                 </div>
                                 <div className="item-info_head">
                                     <span>1 hour 14 mins</span>
-                                    <span className="show-language">{lang ? lang : "Non availiable"}</span>
-                                    <span>{premier ? premDay.getFullYear() : "Non availiable"}</span>
+                                    <span
+                                        className="show-language">{item.show.language ? item.show.language : "Non availiable"}</span>
+                                    <span>{item.show.premiered ? new Date(item.show.premiered).getFullYear() : "Non availiable"}</span>
                                 </div>
                                 <div className="item-info_description">
-                                    {descr ? descr : "No description"}
+                                    {item.show.summary ? item.show.summary.replace(/<\/?[a-zA-Z]+>/gi, '') : "No description"}
                                 </div>
                                 <div className="item-info_genre">
-                                    {genres ? genres.map(item => `${item} `) : "Non availiable"}
+                                    {item.show.genres && item.show.genres.map(item => `${item} `)}
                                 </div>
                             </div>
                         </>

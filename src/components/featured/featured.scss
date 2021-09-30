@@ -88,15 +88,22 @@
       cursor: pointer;
       border: none;
       border-radius: 5px;
+      transition: background-color 0.3s ease;
 
       &.featured_buttons-play {
         background-color: white;
         color: var(--main-color);
+        &:hover {
+          background-color: darken(white, 10%);
+        }
       }
 
       &.featured_buttons-info {
         background-color: grey;
         color: white;
+        &:hover {
+          background-color: darken(grey, 10%);
+        }
       }
 
       span {

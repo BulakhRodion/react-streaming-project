@@ -9,10 +9,10 @@ const Homepage = () => {
         <div className="homepage">
             <Navbar />
             <Featured />
-            <Suggestions query={'action'}/>
-            <Suggestions query={'crime'}/>
-            <Suggestions query={'horror'}/>
-            <Suggestions query={'fantasy'}/>
+            <Suggestions query={'batman'} isFav={false} title={'Action'}/>
+            <Suggestions query={'matrix'} isFav={false} title={'Drama'}/>
+            <Suggestions query={'Rick'} isFav={false} title={'Comedy'}/>
+            <Suggestions query={'Killer'} isFav={false} title={'Crime'}/>
         </div>
     )
 };

@@ -47,7 +47,7 @@ export default function Featured() {
             </div>
             <div className="featured_info">
                 <h1>{isLoading ? single.name : "No title"}</h1>
-                <span className="featured_info-description">{isLoading ? single.summary : "No description availiable"}</span>
+                <span className="featured_info-description">{isLoading ? single.summary.replace(/<\/?[a-zA-Z]+>/gi,'') : "No description availiable"}</span>
                 <div className="featured_buttons">
                     <button className="featured_buttons-play">
                         <PlayArrow/>

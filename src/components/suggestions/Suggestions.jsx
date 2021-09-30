@@ -3,10 +3,10 @@ import {ArrowBackIosOutlined, ArrowForwardIosOutlined} from "@material-ui/icons"
 import SuggestionsItem from "../suggestionsitem/SuggestionsItem";
 import {useEffect, useRef, useState} from "react";
 import Loader from "../loader/Loader";
-import { searchShows } from '../../requests/requests';
+import {searchShows} from '../../requests/requests';
 
 
-export default function Suggestions({query}) {
+export default function Suggestions({query, isFav, title}) {
 
     const [shows, setShows] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -29,18 +29,19 @@ export default function Suggestions({query}) {
         }
     }
 
-    useEffect( () => {
+    useEffect(() => {
         async function fetchData() {
             const res = await searchShows(query);
             setShows(res)
             setIsLoading(false);
         }
         fetchData()
-    })
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <div className="suggestions">
-            <span className="suggestions_title">Continue to watch</span>
+            <span className="suggestions_title">{title}</span>
             <div className="suggestions_wrapper">
                 <ArrowBackIosOutlined
                     className="slider-arrow backward"
@@ -48,11 +49,9 @@ export default function Suggestions({query}) {
                     style={{display: !isSliderMoved && "none"}}
                 />
                 <div className="suggestions_container" ref={listRef}>
-                    {isLoading ? (<Loader />) : (
+                    {isLoading ? (<Loader/>) : (
                         shows.map((item, index) => (
-                            <SuggestionsItem   index={index} image={item.show.image} descr={item.show.summary}
-                                             genres={item.show.genres} premier={item.show.premiered}
-                                             lang={item.show.language} key={item.show.id}/>))
+                            <SuggestionsItem index={index} key={item.show.id} item={item}/>))
                     )}
                 </div>
                 <ArrowForwardIosOutlined

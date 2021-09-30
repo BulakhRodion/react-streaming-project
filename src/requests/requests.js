@@ -11,9 +11,9 @@ const getRandomInt = () => {
     return Math.floor(Math.random() * 2000);
 }
 
-export const searchSingle = async () => {
+export const searchSingle = async (query = getRandomInt()) => {
     const {data} = await axios.get(
-        `https://api.tvmaze.com/shows/${getRandomInt()}`
+        `https://api.tvmaze.com/shows/${query}`
     );
     return data;
 }
