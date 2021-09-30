@@ -2,6 +2,9 @@ import "./navbar.scss";
 import {ArrowDropDown, Notifications, Search} from "@material-ui/icons";
 import {useState} from "react";
 import { getAuth, signOut } from 'firebase/auth';
+import {Link} from "react-router-dom";
+import mainLogo from '../../assets/images/main-logo.png'
+import profile from '../../assets/images/profile.jpg'
 
 const Navbar = () => {
     const [isScrolled, setScrolled] = useState(false);
@@ -25,14 +28,17 @@ const Navbar = () => {
         <div className={ isScrolled ? "navbar scrolled" : "navbar"}>
             <div className="container">
                 <div className="navbar_left">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png" alt="Netflix logo"/>
+                    <img src={mainLogo} alt="Netflix logo"/>
                     <span>Series</span>
                     <span>Movies</span>
+                    <Link to={{pathname: "/favorites"}}>
+                        <span>Favorites</span>
+                    </Link>
                 </div>
                 <div className="navbar_right">
                     <Search className="navbar_icon"/>
                     <Notifications className="navbar_icon"/>
-                    <img src="https://ih0.redbubble.net/image.618427277.3222/flat,1000x1000,075,f.u2.jpg" alt="profile icon"/>
+                    <img src={profile} alt="profile icon"/>
                     <div className="navbar_profile">
                         <ArrowDropDown className="navbar_icon"/>
                         <div className="navbar_profile-options">

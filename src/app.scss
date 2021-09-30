@@ -18,3 +18,8 @@
     @content;
   }
 }
+@mixin favContainer {
+  @media(max-width:1001px){
+    @content;
+  }
+}

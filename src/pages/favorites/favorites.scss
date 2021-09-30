@@ -1,0 +1,44 @@
+@import "../../app";
+
+.favorites {
+  min-height: 100vh;
+  height: 100%;
+  background-color: black;
+  color: white;
+  &_container {
+    width: 100%;
+    height: 100%;
+    padding: 0 50px;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    @include favContainer {
+      flex-wrap: nowrap;
+      flex-direction: column;
+    }
+    .favorites_back {
+      position: absolute;
+      top: 50px;
+      left: 5px;
+      font-size: 2.5rem;
+    }
+  }
+  &_without-content {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .favorites_icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #c94040;
+    }
+    .favorites_text {
+      font-size: 1.5rem;
+    }
+  }
+}

@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import mainLogo from '../../assets/images/main-logo.png'
 
 export default function Loginization() {
 
@@ -36,7 +37,7 @@ export default function Loginization() {
             <div className="loginization_head">
                 <div className="loginization_head-wrapper">
                     <img className="loginization_head-logo"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png"
+                         src={mainLogo}
                          alt="Netflix logo"/>
                 </div>
             </div>

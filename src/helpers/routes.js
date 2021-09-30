@@ -1,5 +1,6 @@
 import {Route, Redirect} from 'react-router-dom';
 import Homepage from "../pages/homepage/Homepage";
+import Favorites from "../pages/favorites/Favorites";
 
 export function IsUserRedirect({user, children, loggedInPath}) {
 
@@ -23,13 +24,16 @@ export function IsUserRedirect({user, children, loggedInPath}) {
     )
 }
 
-export function ProtectedRoute({user}) {
+export function ProtectedRoute({user, isFavorites}) {
     return (
         <Route
             exact
             render={({location}) => {
-                if(user) {
+                if(user && !isFavorites) {
                     return <Homepage />
+                }
+                if(user && isFavorites) {
+                    return <Favorites />
                 }
                 if(!user) {
                     return (

@@ -22,17 +22,20 @@ export default function SuggestionsItem({index, item}) {
         } else {
             setFavourites(newFavouriteList);
             saveToLocalStorage(newFavouriteList);
+            setIsAdded(true)
         }
     }
     const handleRemove = () => {
         const newFavouriteList = favourites.filter((fav) => fav.show.id !== item.show.id);
-        setFavourites(newFavouriteList)
+        setFavourites(newFavouriteList);
+        saveToLocalStorage(newFavouriteList);
+        setIsAdded(false);
     }
 
     useEffect( () => {
         const favsArray = JSON.parse(localStorage.getItem(`${user[0].uid}`)) || [];
         if(favsArray.includes(item)) {
-            setIsAdded(true)
+            setIsAdded(true);
         }
         // eslint-disable-next-line
     }, [])
@@ -57,7 +60,7 @@ export default function SuggestionsItem({index, item}) {
                                     <ThumbDownOutlined className="icon"/>
                                 </div>
                                 <div className="item-info_head">
-                                    <span>1 hour 14 mins</span>
+                                    <span>{item.show.name ? item.show.name : "Non availiable"}</span>
                                     <span
                                         className="show-language">{item.show.language ? item.show.language : "Non availiable"}</span>
                                     <span>{item.show.premiered ? new Date(item.show.premiered).getFullYear() : "Non availiable"}</span>
