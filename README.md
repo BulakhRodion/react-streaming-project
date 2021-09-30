@@ -7,3 +7,4 @@ What's left:
 * Add notification
 * Render series/movies () 
 * Add likes/sharing functionallity 
+* Add video viewing functionality
