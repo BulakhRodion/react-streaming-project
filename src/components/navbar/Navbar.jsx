@@ -3,7 +3,6 @@ import {ArrowDropDown, Notifications, Search} from "@material-ui/icons";
 import {useState} from "react";
 import { getAuth, signOut } from 'firebase/auth';
 import {Link} from "react-router-dom";
-import mainLogo from '../../assets/images/main-logo.png'
 import profile from '../../assets/images/profile.jpg'
 
 const Navbar = () => {
@@ -28,10 +27,10 @@ const Navbar = () => {
         <div className={ isScrolled ? "navbar scrolled" : "navbar"}>
             <div className="container">
                 <div className="navbar_left">
-                    <img src={mainLogo} alt="Netflix logo"/>
+                    <img src="https://static.wikia.nocookie.net/netflix/images/5/54/Netflix_logo.png/revision/latest?cb=20190623201834&path-prefix=ru" alt="Netflix logo"/>
                     <span>Series</span>
                     <span>Movies</span>
-                    <Link to={{pathname: "/favorites"}}>
+                    <Link to={{pathname: "/favorites"}} className="navbar_link">
                         <span>Favorites</span>
                     </Link>
                 </div>
