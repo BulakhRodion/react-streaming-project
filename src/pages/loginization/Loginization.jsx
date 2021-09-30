@@ -3,13 +3,12 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import mainLogo from '../../assets/images/main-logo.png'
+import logo from '../../assets/images/newlogo.png';
 
 export default function Loginization() {
 
     const history = useHistory();
     const auth = getAuth();
-
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -37,7 +36,7 @@ export default function Loginization() {
             <div className="loginization_head">
                 <div className="loginization_head-wrapper">
                     <img className="loginization_head-logo"
-                         src={mainLogo}
+                         src={logo}
                          alt="Netflix logo"/>
                 </div>
             </div>

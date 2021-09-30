@@ -5,12 +5,12 @@ import Accordion from "../../components/accordion/Accordion";
 import {AccordionData} from "../../helpers/AccordionData";
 import {Link, useHistory} from "react-router-dom";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import logo from "../../assets/images/newlogo.png";
 
 export default function Registration() {
 
     const history = useHistory();
     const auth = getAuth();
-
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -46,7 +46,7 @@ export default function Registration() {
                 <div className="registration_head">
                     <div className="registration_head-wrapper">
                         <img className="registration_head-logo"
-                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png"
+                             src={logo}
                              alt="Netflix logo"/>
                         <Link to={{pathname: "/login"}}>
                             <button className="registration_head-login">Sign in</button>
