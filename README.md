@@ -1,5 +1,5 @@
 ## General info - React streaming app
-First project with React. Temporary app state can be checked at this link - https://react-tv-nx.netlify.app/ 
+First project with React. Temporary this link for this app at its current state - https://react-tv-nx.netlify.app/ 
 	
 ## TODO
 What's left:
